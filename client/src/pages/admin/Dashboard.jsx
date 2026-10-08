@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../api.js'
 import { rs } from '../../format.js'
-import { Badge, Card } from './ui.jsx'
+import { Badge, Card } from './Ui.jsx'
 
 function Stat({ title, value, tone = 'text-ink', to }) {
   return (

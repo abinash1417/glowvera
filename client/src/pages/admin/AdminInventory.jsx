@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../api.js'
-import { Badge, Card, inputClass } from './ui.jsx'
+import { Badge, Card, inputClass } from './Ui.jsx'
 
 function Table({ rows, columns }) {
   if (!rows.length) return <p className="text-sm text-muted">Nothing here. All good.</p>

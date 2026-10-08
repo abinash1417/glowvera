@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api } from '../../api.js'
 import { rs } from '../../format.js'
-import { Badge, BackLink, Card, Errors, Pager, btnGhost, btnPrimary, errMessages, inputClass, label } from './ui.jsx'
+import { Badge, BackLink, Card, Errors, Pager, btnGhost, btnPrimary, errMessages, inputClass, label } from './Ui.jsx'
 
 const STATUSES = ['PENDING_PAYMENT', 'PENDING_WHATSAPP', 'PAID', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'FAILED']
 const when = (d) => new Date(d).toLocaleString()

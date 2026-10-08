@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { api } from '../../api.js'
 import { rs } from '../../format.js'
-import { Badge, BackLink, Card, Errors, Pager, btnGhost, btnPrimary, errMessages, inputClass } from './ui.jsx'
+import { Badge, BackLink, Card, Errors, Pager, btnGhost, btnPrimary, errMessages, inputClass } from './Ui.jsx'
 
 export function ProductList() {
   const [q, setQ] = useState('')
