@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <body style="font-family: sans-serif; padding: 2rem">
+    <h2>PayHere sandbox test</h2>
+    <p id="msg">Creating order...</p>
+    <script>
+      const API = '/api'
+
+      async function run() {
+        const msg = document.getElementById('msg')
+        try {
+          const product = await (await fetch(API + '/products/hydra-glow-gel-moisturizer')).json()
+          const variantId = product.data.variants[0].id
+
+          const res = await fetch(API + '/orders/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              method: 'PAYHERE',
+              items: [{ variantId, quantity: 1 }],
+              customer: {
+                name: 'Test Buyer',
+                email: 'buyer@example.com',
+                phone: '0771234567',
+                addressLine: '12 Galle Road',
+                city: 'Moratuwa',
+                district: 'Colombo',
+              },
+            }),
+          })
+          const json = await res.json()
+          if (!json.success) throw new Error(json.error.message)
+
+          const action = json.data.clientAction
+          msg.textContent = 'Order ' + json.data.order.orderCode + ' created. Going to PayHere...'
+
+          const form = document.createElement('form')
+          form.method = 'POST'
+          form.action = action.actionUrl
+          for (const [name, value] of Object.entries(action.fields)) {
+            const input = document.createElement('input')
+            input.type = 'hidden'
+            input.name = name
+            input.value = value
+            form.appendChild(input)
+          }
+          document.body.appendChild(form)
+          form.submit()
+        } catch (e) {
+          msg.textContent = 'Error: ' + e.message
+        }
+      }
+      run()
+    </script>
+  </body>
+</html>

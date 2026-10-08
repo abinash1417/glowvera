@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: glowvera-api
+  config:
+    # Loads server/.env (KEY=value lines) so the same file works locally. Optional: ignored if missing.
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/glowvera_spring?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false            # no lazy loading in controllers: services return DTOs
+    hibernate:
+      ddl-auto: none               # Flyway owns the schema
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 25
+        default_batch_fetch_size: 50   # avoids N+1 on lazy collections
+  flyway:
+    enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
+server:
+  port: ${PORT:5000}
+  forward-headers-strategy: ${FORWARD_HEADERS_STRATEGY:none}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+springdoc:
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:true}
+  api-docs:
+    enabled: ${SWAGGER_ENABLED:true}
+
+glowvera:
+  environment: ${APP_ENV:development}
+  client-url: ${CLIENT_URL:http://localhost:5173}
+  public-api-url: ${PUBLIC_API_URL:}
+  whatsapp-number: ${WHATSAPP_NUMBER:}
+  seed-demo-data: ${SEED_DEMO_DATA:false}
+  jwt:
+    secret: ${JWT_SECRET}            # no default: the app refuses to start without it
+    expires-minutes: ${JWT_EXPIRES_MINUTES:60}   # token + cookie lifetime (60 = 1 hour)
+  payhere:
+    merchant-id: ${PAYHERE_MERCHANT_ID:}
+    merchant-secret: ${PAYHERE_MERCHANT_SECRET:}
+    sandbox: ${PAYHERE_SANDBOX:true}
+  admin:
+    name: ${ADMIN_NAME:Store Admin}
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
+
+logging:
+  level:
+    com.glowvera: INFO
