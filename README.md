@@ -164,7 +164,7 @@ npm run build
 
 ---
 
-## 📋 Interview Discussion Points
+## 💡 Key Architectural Decisions & Rationale
 
 * **Why Layered & DDD Architecture?**: Keeping domain rules in `com.glowvera.domain` ensures critical business logic (stock math, state machine transitions, coupon math) is completely independent of frameworks, easily testable, and maintainable.
 * **How are stock deadlocks prevented?**: `SELECT ... FOR UPDATE` locks variant rows in strict ascending ID order during checkout transactions.
