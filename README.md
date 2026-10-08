@@ -173,5 +173,21 @@ npm run build
 
 ---
 
+## 💡 Assumptions & Limitations
+
+### Assumptions
+* **Currency**: Transactions are calculated in Sri Lankan Rupees (LKR / Rs.) using integer cents (`long`) to eliminate floating-point drift.
+* **Shipping Logistics**: Shipping fees are dynamically calculated based on Sri Lankan districts.
+* **WhatsApp Order Flow**: Direct WhatsApp checkout sends formatted order payloads to a central business WhatsApp number for manual/automated confirmation.
+* **PayHere Sandbox**: Payments are processed through the official PayHere Sandbox gateway environment.
+
+### Limitations & Future Scope
+* **Rate Limiting Scope**: The current `RateLimitFilter` uses an in-memory token bucket suitable for single-instance deployments; a distributed multi-node deployment would back rate limits with Redis.
+* **Email Notifications**: Order confirmation emails are logged internally rather than dispatched via external SMTP services (e.g., AWS SES or SendGrid).
+* **Refund Automation**: Payment cancellations and refunds are triggered via Admin Panel state transitions (`PENDING` / `PAID` → `CANCELLED`), which release reserved stock automatically, but automated PayHere Refund API triggers are handled manually via the PayHere merchant portal.
+
+---
+
 ## 📄 License
 This project is submitted as part of the Software Engineer Internship Technical Assessment.
+
